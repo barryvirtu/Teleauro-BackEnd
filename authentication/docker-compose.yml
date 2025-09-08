@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  authentication:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://74.234.38.91:4444/salesappdb
+      SPRING_DATASOURCE_USERNAME: salesapp
+      SPRING_DATASOURCE_PASSWORD: on5YWFLMLUTQni7t2bR6
+    depends_on: []
