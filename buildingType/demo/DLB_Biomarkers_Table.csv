@@ -1,0 +1,9 @@
+ID,Biomarker Name,Type,Detection Method,Clinical Relevance,Comment
+1,Dopamine Transporter (DAT),Imaging,SPECT (¹²³I-FP-CIT / DaTSCAN),Helps confirm dopaminergic deficit typical of DLB,Reduced striatal uptake indicates loss of presynaptic dopaminergic neurons
+2,Cardiac MIBG Uptake,Imaging,SPECT (¹²³I-MIBG),Differentiates DLB from Alzheimer’s disease,Reduced cardiac sympathetic innervation is common in DLB but preserved in AD
+3,Glucose Metabolism,Imaging,PET (FDG),Supports DLB diagnosis via characteristic metabolic patterns,Occipital hypometabolism and “cingulate island sign” are typical in DLB
+4,CSF α-synuclein,Fluid biomarker,Lumbar puncture,May reflect Lewy body pathology,Elevated or misfolded α-synuclein correlates with Lewy body burden
+5,CSF Tau / Aβ,Fluid biomarker,Lumbar puncture,Helps rule out or confirm co-existing Alzheimer’s pathology,DLB often shows lower tau and variable Aβ42 compared to AD
+6,RT-QuIC α-synuclein,Fluid biomarker,CSF assay,High specificity for Lewy body disorders,Detects misfolded α-synuclein via amplification; promising for early diagnosis
+7,Structural MRI,Imaging,MRI,Supports differential diagnosis,May show insular or occipital atrophy; less hippocampal atrophy than AD
+8,Plasma Neurodegeneration Markers,Fluid biomarker,Blood test,Emerging tools for tracking disease progression,Includes neurofilament light chain and p-Tau217; may reflect neuronal damage
