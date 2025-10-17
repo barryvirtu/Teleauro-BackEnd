@@ -9,13 +9,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://74.234.38.91:4444/salesappdb?sslmode=disable
       SPRING_DATASOURCE_USERNAME: salesapp
       SPRING_DATASOURCE_PASSWORD: on5YWFLMLUTQni7t2bR6
+    networks:
+      - teleauro-net
 
-  teleauro-sales-app:
-    build: ../teleauro-sales-app
-    image: teleauro-sales-app:latest
-    container_name: teleauro-sales-app
-    ports:
-      - "8080:80"
-    restart: unless-stopped
-    depends_on:
-      - authentication
+networks:
+  teleauro-net:
+    external: true
