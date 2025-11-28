@@ -1,3 +1,4 @@
+
 package com.teleauro.authentication.controller;
 
 import com.teleauro.authentication.dto.LoginRequest;
@@ -44,37 +45,28 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         long start = System.currentTimeMillis();
 
-        long dbStart = System.currentTimeMillis();
         Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
-        long dbDuration = System.currentTimeMillis() - dbStart;
-        System.out.println("DB query took " + dbDuration + "ms");
-
         if (userOpt.isPresent()) {
             User user = userOpt.get();
 
-            long hashStart = System.currentTimeMillis();
             boolean matches = passwordEncoder.matches(loginRequest.getPassword(), user.getPasswordHash());
-            long hashDuration = System.currentTimeMillis() - hashStart;
-            System.out.println("Password match took " + hashDuration + "ms");
-
             if (matches) {
                 long jwtStart = System.currentTimeMillis();
                 String token = jwtUtil.generateToken(user.getUsername());
                 long jwtDuration = System.currentTimeMillis() - jwtStart;
-                System.out.println("JWT generation took " + jwtDuration + "ms");
 
                 long totalDuration = System.currentTimeMillis() - start;
-                System.out.println("Login successful in " + totalDuration + "ms");
 
-                LoginResponse response = new LoginResponse("Login successful", token, jwtDuration, totalDuration);
+                // Get expiration from JwtUtil
+                long expiresIn = jwtUtil.getExpiration(); // in milliseconds
+
+                LoginResponse response = new LoginResponse("Login successful", token, jwtDuration, totalDuration, expiresIn);
                 return ResponseEntity.ok(response);
             }
         }
 
         long totalDuration = System.currentTimeMillis() - start;
-        System.out.println("Login failed in " + totalDuration + "ms");
-
-        LoginResponse response = new LoginResponse("Login failed", "", 0, totalDuration);
+        LoginResponse response = new LoginResponse("Login failed", "", 0, totalDuration, 0);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 

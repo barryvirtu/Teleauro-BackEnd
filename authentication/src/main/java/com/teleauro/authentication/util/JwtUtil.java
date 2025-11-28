@@ -1,3 +1,4 @@
+
 package com.teleauro.authentication.util;
 
 import io.jsonwebtoken.Jwts;
@@ -24,9 +25,14 @@ public class JwtUtil {
 
     @PostConstruct
     public void init() {
+        // Ensure secret is long enough for HMAC SHA-256 (at least 32 bytes)
+        if (secret.length() < 32) {
+            throw new IllegalArgumentException("JWT secret must be at least 32 characters for HS256");
+        }
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
+    /** Generate JWT token with expiration */
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -36,6 +42,7 @@ public class JwtUtil {
                 .compact();
     }
 
+    /** Validate JWT token */
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -45,6 +52,7 @@ public class JwtUtil {
         }
     }
 
+    /** Extract username from token */
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -52,5 +60,10 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    /** Return configured expiration time in milliseconds */
+    public long getExpiration() {
+        return expiration;
     }
 }

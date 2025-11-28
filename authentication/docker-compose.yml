@@ -2,13 +2,14 @@
 services:
   authentication:
     build: .
-    container_name: authentication-authentication
+    container_name: authentication
     ports:
       - "8082:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://74.234.38.91:4444/salesappdb?sslmode=disable
       SPRING_DATASOURCE_USERNAME: salesapp
       SPRING_DATASOURCE_PASSWORD: on5YWFLMLUTQni7t2bR6
+      JWT_SECRET: mySuperSecretKey1234567890abcdef9876543210  # <-- Added this line
     networks:
       - teleauro-net
 
