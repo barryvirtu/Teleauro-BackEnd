@@ -1,4 +1,3 @@
-
 package com.teleauro.datamanagement.service;
 
 import com.teleauro.datamanagement.model.SalesOpportunity;

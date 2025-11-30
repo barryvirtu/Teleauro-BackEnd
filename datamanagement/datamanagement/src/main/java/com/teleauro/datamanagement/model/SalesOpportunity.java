@@ -1,4 +1,3 @@
-
 package com.teleauro.datamanagement.model;
 
 import jakarta.persistence.Column;
