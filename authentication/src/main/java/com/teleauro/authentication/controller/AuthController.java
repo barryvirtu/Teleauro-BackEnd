@@ -3,6 +3,7 @@ package com.teleauro.authentication.controller;
 
 import com.teleauro.authentication.dto.LoginRequest;
 import com.teleauro.authentication.dto.LoginResponse;
+import com.teleauro.authentication.model.Roles;
 import com.teleauro.authentication.model.User;
 import com.teleauro.authentication.repository.UserRepository;
 import com.teleauro.authentication.util.JwtUtil;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import jakarta.validation.Valid;
 
@@ -52,7 +54,7 @@ public class AuthController {
             boolean matches = passwordEncoder.matches(loginRequest.getPassword(), user.getPasswordHash());
             if (matches) {
                 long jwtStart = System.currentTimeMillis();
-                String token = jwtUtil.generateToken(user.getUsername());
+                String token = jwtUtil.generateToken(user.getUsername(), List.of(user.getRole()));
                 long jwtDuration = System.currentTimeMillis() - jwtStart;
 
                 long totalDuration = System.currentTimeMillis() - start;
@@ -60,7 +62,9 @@ public class AuthController {
                 // Get expiration from JwtUtil
                 long expiresIn = jwtUtil.getExpiration(); // in milliseconds
 
-                LoginResponse response = new LoginResponse("Login successful", token, jwtDuration, totalDuration, expiresIn);
+                LoginResponse response = new LoginResponse("Login successful", token, jwtDuration, totalDuration,
+                        expiresIn);
+
                 return ResponseEntity.ok(response);
             }
         }

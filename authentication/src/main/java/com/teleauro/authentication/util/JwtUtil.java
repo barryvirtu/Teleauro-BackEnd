@@ -8,8 +8,11 @@ import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.teleauro.authentication.model.Roles;
+
 import jakarta.annotation.PostConstruct;
 import java.util.Date;
+import java.util.List;
 import java.security.Key;
 
 @Component
@@ -33,11 +36,12 @@ public class JwtUtil {
     }
 
     /** Generate JWT token with expiration */
-    public String generateToken(String username) {
+    public String generateToken(String username, List<Roles> roles) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .claim("roles", roles.stream().map(e -> e.name()).toList())
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
