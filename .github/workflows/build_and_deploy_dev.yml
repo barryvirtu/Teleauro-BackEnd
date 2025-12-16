@@ -52,7 +52,7 @@ jobs:
   
   Teleauro-Delete-Artifact:
     name: Teleauro Delete Artifact
-    needs: [ Teleauro-Core-Build, Teleauro-Authentication-Build, Teleauro-DataManagement-Build ]
+    needs: [ Teleauro-Authentication-Build, Teleauro-DataManagement-Build ]
     runs-on: ubuntu-latest
     steps:
       - name: Delete artifact
