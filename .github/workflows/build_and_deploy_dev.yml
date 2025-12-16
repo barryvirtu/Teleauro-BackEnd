@@ -42,7 +42,7 @@ jobs:
         run: docker stop authentication && docker rm authentication
 
       - name: Run container
-        run: docker run -d -p 8083:9090 --name authentication teleauro-sales-app-authentication
+        run: docker run -d -p 8082:8080 --name authentication teleauro-sales-app-authentication
 
   Teleauro-DataManagement-Build:
     name: Teleauro Data Management Build
