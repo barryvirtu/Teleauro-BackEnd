@@ -34,11 +34,8 @@ jobs:
         with:
           name: Output
 
-      - name: Use authentication directory
-        run: cd authentication
-
-      - name: Build Docker image
-        run: docker build -f Dockerfile -t authentication .
+      - name: Use authentication directory & build docker image
+        run: docker build -f authentication/Dockerfile -t authentication .
 
   Teleauro-DataManagement-Build:
     name: Teleauro Data Management Build
@@ -51,7 +48,14 @@ jobs:
           name: Output
 
       - name: Use data management directory
-        run: cd datamanagement
-
-      - name: Build Docker image
-        run: docker build -f Dockerfile -t datamanagement .
+        run: docker build -f datamanagement/Dockerfile -t datamanagement .
+  
+  Teleauro-Delete-Artifact:
+    name: Teleauro Delete Artifact
+    needs: [ Teleauro-Authentication-Build, Teleauro-DataManagement-Build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete artifact
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: Output

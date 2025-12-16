@@ -1,22 +1,11 @@
-# Stage 1: Build the JAR
-FROM eclipse-temurin:21-jdk AS build
-WORKDIR /app
+# Stage 1: Download the base image
+FROM eclipse-temurin:17-jdk-jammy
 
-COPY mvnw* pom.xml ./
-COPY .mvn .mvn
+#Copy datamanagement.jar into the image
+COPY datamanagement/target/datamanagement*.jar app.jar
 
-RUN ./mvnw dependency:go-offline
-
-COPY src src
-RUN ./mvnw clean package -DskipTests
-
-# Stage 2: Run the JAR
-FROM eclipse-temurin:21-jre-alpine AS runtime
-WORKDIR /app
-
-COPY --from=build /app/target/*.jar app.jar
-COPY src/main/resources/osopenuprn_202509_cut.csv /app/osopenuprn_202509_cut.csv
-
+# Expose the port the app runs on
 EXPOSE 9090
 
-ENTRYPOINT ["java","-jar","app.jar"]
+# Run the JAR
+ENTRYPOINT ["java", "-jar", "app.jar"]
