@@ -5,7 +5,7 @@ services:
     build: .
     container_name: datamanagement
     ports:
-      - "8083:8080"  # or any available port you want to map
+      - "8083:9090"  # or any available port you want to map
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://74.234.38.91:4444/salesappdb?sslmode=disable
       SPRING_DATASOURCE_USERNAME: salesapp

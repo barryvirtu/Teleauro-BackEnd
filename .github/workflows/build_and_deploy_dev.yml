@@ -34,8 +34,14 @@ jobs:
         with:
           name: Output
 
-      - name: Use authentication directory & build docker image
-        run: docker build -f authentication/Dockerfile -t authentication .
+      - name: Build docker image
+        run: docker build -f authentication/Dockerfile -t teleauro-sales-app-authentication .
+
+      - name: Stop and remove container
+        run: docker stop authentication && docker rm authentication
+
+      - name: Run container
+        run: docker run -d -p 8083:9090 --name authentication teleauro-sales-app-authentication
 
   Teleauro-DataManagement-Build:
     name: Teleauro Data Management Build
@@ -47,8 +53,14 @@ jobs:
         with:
           name: Output
 
-      - name: Use data management directory
-        run: docker build -f datamanagement/Dockerfile -t datamanagement .
+      - name: Build docker image
+        run: docker build -f datamanagement/Dockerfile -t teleauro-sales-app-datamanagement .
+
+      - name: Stop and remove container
+        run: docker stop datamanagement && docker rm datamanagement
+
+      - name: Run container
+        run: docker run -d -p 8083:9090 --name datamanagement teleauro-sales-app-datamanagement
   
   Teleauro-Delete-Artifact:
     name: Teleauro Delete Artifact
