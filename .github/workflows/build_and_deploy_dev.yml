@@ -1,0 +1,57 @@
+name: Teleauro-Dev-Build
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+
+  Teleauro-Maven-Build:
+    name: Teleauro Maven Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - run: mvn clean install -DskipTests
+      - run: mkdir output && cp -R authentication datamanagement output
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Output
+          path: output
+
+  Teleauro-Authentication-Build:
+    name: Teleauro Authentication Build
+    needs: [ Teleauro-Maven-Build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Output
+
+      - name: Use authentication directory
+        run: cd authentication
+
+      - name: Build Docker image
+        run: docker build -f Dockerfile -t authentication .
+
+  Teleauro-DataManagement-Build:
+    name: Teleauro Data Management Build
+    needs: [ Teleauro-Maven-Build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Output
+
+      - name: Use data management directory
+        run: cd datamanagement
+
+      - name: Build Docker image
+        run: docker build -f Dockerfile -t datamanagement .
