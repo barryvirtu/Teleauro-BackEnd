@@ -38,7 +38,7 @@ jobs:
         run: docker build -f authentication/Dockerfile -t teleauro-sales-app-authentication .
 
       - name: Stop and remove container
-        run: docker stop authentication && docker rm authentication
+        run: docker stop authentication 2>/dev/null && docker rm authentication 2>/dev/null
 
       - name: Run container
         run: docker run -d -p 8083:9090 --name authentication teleauro-sales-app-authentication
@@ -57,7 +57,7 @@ jobs:
         run: docker build -f datamanagement/Dockerfile -t teleauro-sales-app-datamanagement .
 
       - name: Stop and remove container
-        run: docker stop datamanagement && docker rm datamanagement
+        run: docker stop datamanagement 2>/dev/null && docker rm datamanagement 2>/dev/null
 
       - name: Run container
         run: docker run -d -p 8083:9090 --name datamanagement teleauro-sales-app-datamanagement
