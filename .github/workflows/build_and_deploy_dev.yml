@@ -49,3 +49,13 @@ jobs:
 
       - name: Use data management directory
         run: cd datamanagement && docker build -f Dockerfile -t datamanagement .
+  
+  Teleauro-Delete-Artifact:
+    name: Teleauro Delete Artifact
+    needs: [ Teleauro-Core-Build, Teleauro-Authentication-Build, Teleauro-DataManagement-Build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete artifact
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: Output
