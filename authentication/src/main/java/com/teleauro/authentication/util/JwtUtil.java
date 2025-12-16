@@ -8,7 +8,7 @@ import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.teleauro.authentication.model.Roles;
+import com.teleauro.model.user.Roles;
 
 import jakarta.annotation.PostConstruct;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.teleauro.authentication;
+package com.teleauro.datamanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,8 +10,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.teleauro.repository")
 @EntityScan("com.teleauro.model")
 @ComponentScan("com.teleauro")
-public class AuthenticationApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AuthenticationApplication.class, args);
-    }
+public class DatamanagementApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DatamanagementApplication.class, args);
+	}
+
 }

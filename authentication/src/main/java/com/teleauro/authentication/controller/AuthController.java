@@ -3,32 +3,31 @@ package com.teleauro.authentication.controller;
 
 import com.teleauro.authentication.dto.LoginRequest;
 import com.teleauro.authentication.dto.LoginResponse;
-import com.teleauro.authentication.model.Roles;
-import com.teleauro.authentication.model.User;
-import com.teleauro.authentication.repository.UserRepository;
 import com.teleauro.authentication.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.teleauro.model.user.User;
+import com.teleauro.repository.user.UserRepository;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody User newUser) {
