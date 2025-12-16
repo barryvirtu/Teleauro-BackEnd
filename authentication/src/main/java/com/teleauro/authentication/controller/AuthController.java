@@ -4,6 +4,7 @@ package com.teleauro.authentication.controller;
 import com.teleauro.authentication.dto.LoginRequest;
 import com.teleauro.authentication.dto.LoginResponse;
 import com.teleauro.authentication.util.JwtUtil;
+import com.teleauro.model.user.Roles;
 import com.teleauro.model.user.User;
 import com.teleauro.repository.user.UserRepository;
 import jakarta.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +55,9 @@ public class AuthController {
             boolean matches = passwordEncoder.matches(loginRequest.getPassword(), user.getPasswordHash());
             if (matches) {
                 long jwtStart = System.currentTimeMillis();
-                String token = jwtUtil.generateToken(user.getUsername(), List.of(user.getRole()));
+
+                List<Roles> roles = user.getRole() == null ? Collections.emptyList() : List.of(user.getRole());
+                String token = jwtUtil.generateToken(user.getUsername(), roles);
                 long jwtDuration = System.currentTimeMillis() - jwtStart;
 
                 long totalDuration = System.currentTimeMillis() - start;
