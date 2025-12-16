@@ -2,7 +2,7 @@
 FROM eclipse-temurin:17-jdk-jammy
 
 #Copy authentication.jar into the image
-COPY target/authentication*.jar app.jar
+COPY authentication/target/authentication*.jar app.jar
 
 # Expose the port the app runs on
 EXPOSE 8080

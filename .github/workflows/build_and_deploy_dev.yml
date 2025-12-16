@@ -35,7 +35,7 @@ jobs:
           name: Output
 
       - name: Use authentication directory & build docker image
-        run: cd authentication && docker build -f Dockerfile -t authentication .
+        run: docker build -f authentication/Dockerfile -t authentication .
 
   Teleauro-DataManagement-Build:
     name: Teleauro Data Management Build
@@ -48,7 +48,7 @@ jobs:
           name: Output
 
       - name: Use data management directory
-        run: cd datamanagement && docker build -f Dockerfile -t datamanagement .
+        run: docker build -f datamanagement/Dockerfile -t datamanagement .
   
   Teleauro-Delete-Artifact:
     name: Teleauro Delete Artifact
